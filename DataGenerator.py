@@ -8,7 +8,24 @@ This is a temporary script file.
 from tkinter import *
 import random       
 import csv
-               
+import threading, time ,random
+
+mutex=threading.Lock()      
+
+class thread_one(threading.Thread):
+    def run(self):
+        global mutex
+        outfn = 'dataOut1.csv' 
+        with open(outfn, 'w', newline = '') as csvFile:
+            y=0
+            csvWriter = csv.writer(csvFile, delimiter='\t')
+            csvWriter.writerow(['mutex,', 'mutex,']) 
+            # y=y+1
+            # if(y==10):
+            #     break           
+
+        mutex.release()
+
 
 def printInfo():                    # 列印輸入資訊
     print("Account: %s\nPassword: %s" % (e1.get(),e2.get()))
@@ -26,7 +43,15 @@ def randomData():                    # 列印輸入資訊
         while condition==False:
             csvWriter = csv.writer(csvFile, delimiter='\t')
             csvWriter.writerow(['RandomData,', random.choice([1,2,3,4,5,6])]) 
-            # x = x+1
+            x = x+1
+            if(x==100):
+                print("mutex.acquire")
+                mutex.acquire()
+                t1=thread_one()
+                t1.start()
+                break
+
+
             # if(x>10):
             #     break
 
