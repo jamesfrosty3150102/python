@@ -5,7 +5,6 @@ Spyder Editor
 This is a temporary script file.
 """
 
-# ch18_1.py
 from tkinter import *
 import random       
 import csv
@@ -15,15 +14,23 @@ def printInfo():                    # 列印輸入資訊
     print("Account: %s\nPassword: %s" % (e1.get(),e2.get()))
     
 def randomData():                    # 列印輸入資訊
-    x=0
     outfn = 'dataOut.csv' 
     with open(outfn, 'w', newline = '') as csvFile:
-        while True:
+        x=0
+        condition = True
+        while condition==True:
             csvWriter = csv.writer(csvFile, delimiter='\t')
-            csvWriter.writerow(['data', 'index', 'randomNumber'])
-            csvWriter.writerow(['RandomData', random.choice([1,2,3,4,5,6]), '1']) 
-            if(x>10):
-                break      
+            csvWriter.writerow(['name,', 'data,'])
+            condition = False
+        
+        while condition==False:
+            csvWriter = csv.writer(csvFile, delimiter='\t')
+            csvWriter.writerow(['RandomData,', random.choice([1,2,3,4,5,6])]) 
+            # x = x+1
+            # if(x>10):
+            #     break
+
+  
     # for i in range(10):
     #     print(random.choice([1,2,3,4,5,6]), end=",")
           
