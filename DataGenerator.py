@@ -11,6 +11,8 @@ import csv
 import threading, time ,random
 
 mutex=threading.Lock()      
+global MutexOn 
+MutexOn = False
 
 class thread_one(threading.Thread):
     def run(self):
@@ -25,7 +27,6 @@ class thread_one(threading.Thread):
             #     break           
 
         mutex.release()
-
 
 def printInfo():                    # 列印輸入資訊
     print("Account: %s\nPassword: %s" % (e1.get(),e2.get()))
@@ -43,9 +44,11 @@ def randomData():                    # 列印輸入資訊
         while condition==False:
             csvWriter = csv.writer(csvFile, delimiter='\t')
             csvWriter.writerow(['RandomData,', random.choice([1,2,3,4,5,6])]) 
-            x = x+1
+            x = x+1          
             if(x==100):
-                print("mutex.acquire")
+                if MutexOn==True:
+                    break
+                print("mutex.acquire")          
                 mutex.acquire()
                 t1=thread_one()
                 t1.start()
